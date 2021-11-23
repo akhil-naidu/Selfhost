@@ -24,3 +24,4 @@ yarn-error.log*
 
 # my additions
 package-lock.json
+.env
