@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
+    "@fontsource/allerta-stencil": "^4.5.0",
+    "@fontsource/fira-mono": "^4.5.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^12.8.3",
