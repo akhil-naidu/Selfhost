@@ -1,15 +1,11 @@
-import {
-  Box,
-  Container,
-  Stack,
-  Text,
-  Link,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Container, Stack, useColorModeValue } from '@chakra-ui/react';
 
-export default function SmallWithNavigation() {
+import { Link as RouterLink } from 'react-router-dom';
+
+export default function Footer() {
   return (
     <Box
+      style={{ position: 'absolute', left: 0, bottom: 0, right: 0 }}
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}
     >
@@ -23,12 +19,12 @@ export default function SmallWithNavigation() {
         align={{ base: 'center', md: 'center' }}
       >
         <Stack direction={'row'} spacing={6}>
-          <Link href={'#'}>Home</Link>
-          <Link href={'#'}>About</Link>
-          <Link href={'#'}>Blog</Link>
-          <Link href={'#'}>Contact</Link>
+          <RouterLink to='/'>Home</RouterLink>
+          <RouterLink to='/about'>About</RouterLink>
+          <RouterLink to='/blog'>Blog</RouterLink>
+          <RouterLink to='/contact'>Contact</RouterLink>
         </Stack>
-        <Text>© 2020 Chakra Templates. All rights reserved</Text>
+        <a href={'https://leewardslope.com/'}>© 2021 Leewardslope</a>
       </Container>
     </Box>
   );

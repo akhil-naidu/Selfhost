@@ -15,6 +15,7 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   HamburgerIcon,
   CloseIcon,
@@ -54,13 +55,15 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}
-          >
-            Self Host
-          </Text>
+          <RouterLink to='/'>
+            <Text
+              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+              fontFamily={'heading'}
+              color={useColorModeValue('gray.800', 'white')}
+            >
+              Self Host
+            </Text>
+          </RouterLink>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -122,8 +125,9 @@ const DesktopNav = () => {
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <Link
+                as={RouterLink}
                 p={2}
-                href={navItem.href ?? '#'}
+                to={navItem.href ?? '#'}
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
@@ -162,7 +166,8 @@ const DesktopNav = () => {
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
     <Link
-      href={href}
+      as={RouterLink}
+      to={href}
       role={'group'}
       display={'block'}
       p={2}
@@ -253,7 +258,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <Link as={RouterLink} key={child.label} py={2} to={child.href}>
                 {child.label}
               </Link>
             ))}
@@ -267,7 +272,7 @@ interface NavItem {
   label: string;
   subLabel?: string;
   children?: Array<NavItem>;
-  href?: string;
+  href?: any;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
@@ -302,11 +307,11 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: 'Learn Design',
-    href: '#',
+    label: 'Blog',
+    href: '/blog',
   },
   {
-    label: 'Hire Designers',
-    href: '#',
+    label: 'About',
+    href: '/about',
   },
 ];

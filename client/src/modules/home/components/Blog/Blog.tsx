@@ -32,7 +32,7 @@ const Blog = () => {
         >
           <Image
             src={
-              'https://images.unsplash.com/photo-1626094309830-abbb0c99da4a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80'
+              'https://images.unsplash.com/photo-1619852182277-79aa23f82c8e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80'
             }
             layout={'fill'}
           />
