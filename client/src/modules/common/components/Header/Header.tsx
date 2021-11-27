@@ -22,10 +22,13 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import { useNavigate } from 'react-router-dom';
+
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const navigate = useNavigate();
 
   return (
     <Box>
@@ -82,7 +85,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'white'}
             bg={'orange.400'}
-            href={'#'}
+            onClick={() => navigate('/login')}
             _hover={{
               bg: 'orange.300',
             }}
@@ -95,7 +98,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'white'}
             bg={'orange.400'}
-            href={'#'}
+            onClick={() => navigate('/signup')}
             _hover={{
               bg: 'orange.300',
             }}

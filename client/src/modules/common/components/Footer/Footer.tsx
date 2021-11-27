@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 export default function Footer() {
   return (
     <Box
-      style={{ position: 'absolute', left: 0, bottom: 0, right: 0 }}
+      style={{ position: 'relative', left: 0, bottom: 0, right: 0 }}
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}
     >

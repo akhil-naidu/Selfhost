@@ -11,6 +11,9 @@ import About from './modules/home/containers/About';
 import Error from './modules/common/components/Error';
 import Header from './modules/common/components/Header/Header';
 import Footer from './modules/common/components/Footer/Footer';
+import Signup from './modules/common/components/Authentication/Signup';
+import Signin from './modules/common/components/Authentication/Signin';
+import ForgotPassword from './modules/common/components/Authentication/ForgotPassword';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -18,6 +21,9 @@ export const App = () => (
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/about' element={<About />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/login' element={<Signin />} />
+      <Route path='/reset' element={<ForgotPassword />} />
       <Route path='*' element={<Error />} />
     </Routes>
     <Footer />

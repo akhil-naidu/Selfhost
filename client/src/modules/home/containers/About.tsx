@@ -4,7 +4,7 @@ import React from 'react';
 const About = () => {
   return (
     <React.Fragment>
-      <Container minH={'93vh'}>
+      <Container minH={'100vh'}>
         <Box>about page</Box>
       </Container>
     </React.Fragment>
