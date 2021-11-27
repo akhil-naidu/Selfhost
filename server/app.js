@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
 // Routes Imports
 const defaultRoutes = require('./routes/routes');
@@ -14,6 +15,7 @@ const HttpError = require('./models/http-error');
 const app = express();
 dotenv.config();
 app.use(cors());
+app.use(bodyParser.json());
 
 // Middleware configuration
 app.use('/api', defaultRoutes);
@@ -38,5 +40,12 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An error occurred' });
 });
 
-const PORT = process.env.PORT || 5050;
-app.listen(PORT, () => console.log(`The Server is listening on ${PORT}`));
+// Establishing connection to our database and then start our server
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log('Established connection with MongoDB');
+    const PORT = process.env.PORT || 5050;
+    app.listen(PORT, () => console.log(`The Server is listening on ${PORT}`));
+  })
+  .catch((error) => console.log(error));
