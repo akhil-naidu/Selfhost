@@ -25,10 +25,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import React from 'react';
+
+import { useAuth } from '../../../../contexts/AuthContext';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   return (
     <Box>
@@ -79,32 +83,52 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={6}
         >
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'orange.400'}
-            onClick={() => navigate('/login')}
-            _hover={{
-              bg: 'orange.300',
-            }}
-          >
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'orange.400'}
-            onClick={() => navigate('/signup')}
-            _hover={{
-              bg: 'orange.300',
-            }}
-          >
-            Sign Up
-          </Button>
+          {!isLoggedIn ? (
+            <React.Fragment>
+              <Button
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'orange.400'}
+                onClick={() => navigate('/login')}
+                _hover={{
+                  bg: 'orange.300',
+                }}
+              >
+                Sign In
+              </Button>
+              <Button
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'orange.400'}
+                onClick={() => navigate('/signup')}
+                _hover={{
+                  bg: 'orange.300',
+                }}
+              >
+                Sign Up
+              </Button>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Button
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'orange.400'}
+                onClick={() => navigate('/dashboard')}
+                _hover={{
+                  bg: 'orange.300',
+                }}
+              >
+                Dashboard
+              </Button>
+            </React.Fragment>
+          )}
           <ColorModeSwitcher />
         </Stack>
       </Flex>

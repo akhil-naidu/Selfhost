@@ -14,18 +14,33 @@ import Footer from './modules/common/components/Footer/Footer';
 import Signup from './modules/common/components/Authentication/Signup';
 import Signin from './modules/common/components/Authentication/Signin';
 import ForgotPassword from './modules/common/components/Authentication/ForgotPassword';
+import ProfileCard from './modules/user/components/ProfileCard';
+import DashboardLayout from './modules/common/containers/DashboardLayout';
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Header />
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/about' element={<About />} />
-      <Route path='/signup' element={<Signup />} />
-      <Route path='/login' element={<Signin />} />
-      <Route path='/reset' element={<ForgotPassword />} />
-      <Route path='*' element={<Error />} />
-    </Routes>
-    <Footer />
-  </ChakraProvider>
-);
+import { useAuth } from './contexts/AuthContext';
+
+export const App = () => {
+  const { isLoggedIn } = useAuth();
+
+  return (
+    <ChakraProvider theme={theme}>
+      <Header />
+
+      <React.Fragment>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Signin />} />
+          <Route path='/reset' element={<ForgotPassword />} />
+          <Route path='/dashboard' element={<DashboardLayout />}>
+            <Route path='profile' element={<ProfileCard />} />
+          </Route>
+          <Route path='*' element={<Error />} />
+        </Routes>
+      </React.Fragment>
+
+      <Footer />
+    </ChakraProvider>
+  );
+};

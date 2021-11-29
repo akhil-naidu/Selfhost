@@ -11,10 +11,51 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Divider,
+  useToast,
+  Center,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
 
-export default function SimpleCard() {
+import { useAuth } from '../../../../contexts/AuthContext';
+
+const Signin = () => {
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const { login } = useAuth();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      const unsubscribe = await login(loginEmail, loginPassword);
+      return unsubscribe;
+    } catch (error) {
+      console.log(error);
+      setError('Failed to Login');
+    }
+    setLoading(false);
+    navigate('/dashboard');
+  };
+
+  const handleLoginWithGoogle = async () => {};
+
+  useEffect(() => {
+    if (error !== '')
+      toast({
+        title: error,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      });
+  }, [toast, error]);
+
   return (
     <Flex
       minH={'100vh'}
@@ -39,11 +80,19 @@ export default function SimpleCard() {
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Email address</FormLabel>
-              <Input type='email' />
+              <Input
+                type='email'
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Password</FormLabel>
-              <Input type='password' />
+              <Input
+                type='password'
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -57,8 +106,10 @@ export default function SimpleCard() {
                 </Link>
               </Stack>
               <Button
+                disabled={loading}
                 bg={'orange.400'}
                 color={'white'}
+                onClick={handleLogin}
                 _hover={{
                   bg: 'orange.500',
                 }}
@@ -66,9 +117,24 @@ export default function SimpleCard() {
                 Sign in
               </Button>
             </Stack>
+            <Divider />
+
+            <Button
+              disabled={loading}
+              w={'full'}
+              maxW={'md'}
+              variant={'outline'}
+              leftIcon={<FcGoogle />}
+            >
+              <Center>
+                <Text>Sign in with Google</Text>
+              </Center>
+            </Button>
           </Stack>
         </Box>
       </Stack>
     </Flex>
   );
-}
+};
+
+export default Signin;

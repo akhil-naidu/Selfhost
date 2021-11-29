@@ -16,7 +16,6 @@ const BlogList = () => {
         >
           <Blog />
           <Blog />
-          <Blog />
         </Stack>
       </Container>
     </Box>

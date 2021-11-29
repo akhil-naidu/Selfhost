@@ -5,7 +5,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
+  // HStack,
   InputRightElement,
   Stack,
   Button,
@@ -13,13 +13,51 @@ import {
   Text,
   useColorModeValue,
   Link,
+  useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../../../../contexts/AuthContext';
 
 const Signup = () => {
+  const [regEmail, setRegEmail] = useState('');
+  const [regPassword, setRegPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const { signup } = useAuth();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+    if (regPassword !== confirmPassword) {
+      return setError(`Password didn't matched`);
+    }
+
+    try {
+      setLoading(true);
+      await signup(regEmail, regPassword);
+    } catch (error) {
+      setError(`Failed to create an account, try again later`);
+    }
+
+    setLoading(false);
+    navigate('/');
+  };
+
+  useEffect(() => {
+    if (error !== '')
+      toast({
+        title: error,
+        position: 'top-right',
+        isClosable: true,
+        status: 'error',
+      });
+  }, [toast, error]);
 
   return (
     <Flex
@@ -44,7 +82,7 @@ const Signup = () => {
           p={8}
         >
           <Stack spacing={4}>
-            <HStack>
+            {/* <HStack>
               <Box>
                 <FormControl id='firstName' isRequired>
                   <FormLabel>First Name</FormLabel>
@@ -57,15 +95,23 @@ const Signup = () => {
                   <Input type='text' />
                 </FormControl>
               </Box>
-            </HStack>
+            </HStack> */}
             <FormControl id='email' isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type='email' />
+              <Input
+                type='email'
+                value={regEmail}
+                onChange={(e) => setRegEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id='password' isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  value={regPassword}
+                  onChange={(e) => setRegPassword(e.target.value)}
+                />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -78,12 +124,22 @@ const Signup = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
+            <FormControl id='confirmPassword' isRequired>
+              <FormLabel>Confirm Password</FormLabel>
+              <Input
+                type='text'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
+                disabled={loading}
                 loadingText='Submitting'
                 size='lg'
                 bg={'orange.400'}
                 color={'white'}
+                onClick={handleRegister}
                 _hover={{
                   bg: 'orange.500',
                 }}
